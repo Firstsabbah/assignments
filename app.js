@@ -1,5 +1,5 @@
 const express = require("express");
-const url = require('url');
+const nodemailer = require('nodemailer');
 const handlebars = require("express-handlebars");
 const app = express();
 app.use(express.json());
@@ -29,7 +29,7 @@ app.post('/login', (req, res) => {
 })
 
 let infos;
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   if (!req.body.email || !req.body.password || !req.body.firstname || !req.body.lastname) {
     res.render("register", { message: 'invalid input' })
   }
@@ -42,6 +42,25 @@ app.post('/register', (req, res) => {
   else if (!req.body.email.includes('@')) {
     res.render("register", { message: 'please enter valid email' })
   } else {
+    let email = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'assignment.hesam@gmail.com',
+        pass: 'Hesam123456789'
+      }
+    });
+    const mailOption = {
+      from: ' assignment.hesam@gmail.com',
+      to: req.body.email,
+      subject: 'welcome message',
+      text: `hello ${req.body.firstname} welcome to our website`
+    };
+
+    try {
+      await email.sendMail(mailOption)
+    } catch (err) {
+      console.log('email wan not send');
+    }
     infos = {
       "firstname": req.body.firstname,
       "lastname": req.body.lastname,
@@ -51,8 +70,6 @@ app.post('/register', (req, res) => {
   }
 })
 app.get('/dashboard', (req, res) => {
-  console.log(infos);
-
   res.render('dashboard', infos)
 })
 app.listen(8000, () => {
