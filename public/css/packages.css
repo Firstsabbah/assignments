@@ -76,7 +76,7 @@
 }
 
 .box-btn {
-  width: 180px;
+  width: 18%;
   height: 50px;
   margin-right: auto;
   border: 1px solid #e8015a;
@@ -132,7 +132,7 @@
 }
 
 .packages-btn {
-  width: 70%;
+  width: 200px;
   height: 50px;
   border: 1px solid #e8015a;
   background-color: #e8015a;
@@ -167,7 +167,7 @@
 }
 
 .packages-button {
-  width: 200px;
+  width: 180px;
   height: 52px;
   border: 1px solid #e8015a;
   background-color: #e8015a;
@@ -178,86 +178,24 @@
   margin-top: 0px;
   margin-bottom: 50px;
 }
-@media only screen and (min-width: 360px){
+@media only screen and (max-width: 800px){
   .package-hero {
-    width: 360px;
     height: 198px;
   }
   .package-cover .baner {
     font-size: 35px;
-    color: white;
-    width: 360px;
-    text-align: center;
-    font-weight: bold;
-    font-family: sans-serif;
     position: absolute;
     top: 70px;
-  }
-  .intro {
-    width: 360px;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
   .box{
     display: none;
   }
-  .intro .p1 {
-    width: 360px;
-    text-align: center;
-    font-size: 36px;
-    font-family: sans-serif;
-  }
   .packages-container {
-    width: 360px;
+    width: 90%;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-  }
-}
-
-@media only screen and (max-width: 320px){
-  .package-hero {
-    width: 320px;
-    height: 249px;
-  }
-  .package-cover .baner {
-    font-size: 35px;
-    color: white;
-    width: 320px;
-    text-align: center;
-    font-weight: bold;
-    font-family: sans-serif;
-    position: absolute;
-    top: 70px;
-  }
-  .intro {
-    width: 320px;
-    height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  .box{
-    display: none;
-  }
-  .intro .p1 {
-    width: 280px;
-    text-align: center;
-    font-size: 25px;
-    font-family: sans-serif;
-  }
-  .packages-container {
-    width: 320px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
   }
 }
