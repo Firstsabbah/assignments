@@ -1,7 +1,12 @@
 <div class="auth">
+    {{#if message}}
+    <div class="error">
+        <p>{{message}}</p>
+    </div>
+    {{/if}}
     <div class="login-container">
         <h3>Login</h3>
-        <form autocomplete="off">
+        <form autocomplete="off" action="/login" method="POST">
             <div class="input-container">
                 <label for="email">Email</label>
                 <input type="text" name="email" />
