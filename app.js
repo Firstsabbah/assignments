@@ -72,6 +72,6 @@ app.post('/register', async (req, res) => {
 app.get('/dashboard', (req, res) => {
   res.render('dashboard', infos)
 })
-app.listen(8000, () => {
+app.listen(process.env.PORT || 8000, () => {
   console.log("server started...");
 });
