@@ -4,7 +4,8 @@ const handlebars = require("express-handlebars");
 const mongoose = require("mongoose");
 const clientSessions = require("client-sessions");
 const userRoutes = require("./routes/authRoute");
-const dataClerkRoutes = require("./routes/packageRout");
+const dataClerkRoutes = require("./routes/daraClerkRoute");
+const packageRoutes = require("./routes/packageRoute");
 require("dotenv").config({ path: "./config.env" });
 const app = express();
 
@@ -22,8 +23,8 @@ app.use(
   clientSessions({
     cookieName: "session", // this is the object name that will be added to 'req'
     secret: "week10example_web322", // this should be a long un-guessable string.
-    duration: 5 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
-    activeDuration: 1000 * 60 * 3, // the session will be extended by this many ms each request (1 minute)
+    duration: 15 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
+    activeDuration: 1000 * 60 * 10, // the session will be extended by this many ms each request (1 minute)
   })
 );
 
@@ -32,13 +33,10 @@ app.set("view engine", "handlebars");
 app.get("/", (req, res) => {
   res.render("home");
 });
-app.get("/meal-packages", (req, res) => {
-  res.render("packages");
-});
 
 app.use("/", userRoutes);
 app.use("/admin", dataClerkRoutes);
-
+app.use("/meal-packages", packageRoutes);
 app.listen(process.env.PORT || 8000, () => {
   console.log("server started...");
 });

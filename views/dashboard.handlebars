@@ -3,3 +3,39 @@
     <p class="email-client">your registered email is <b>{{email}}</b></p>
     <a href="/logout" class="btn btn-primary" role="button">logout</a>
 </div>
+
+{{#if totalPrice}}
+<div class="alert alert-success col-md-4 mx-auto text-center" role="alert">
+    total price : {{totalPrice}}
+</div>
+
+<form method="POST" action="/meal-packages/purchase/place-order" class="col-md-2 mx-auto">
+    <button class="btn btn-danger text-white col-12">
+        place order
+    </button>
+</form>
+
+{{/if}}
+
+<div class="container mb-5 mt-5">
+    <div class="row">
+        {{#each packages}}
+        <div class="col-md-3 ">
+
+            <div class="card" style="width: 17rem;">
+                <img class="card-img-top" src="/images/{{this.package_id.imgSrc}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.package_id.name}}</h5>
+                    <p class="card-text">{{this.package_id.describe}}</p>
+                    <p class="bg-primary text-white rounded"
+                        style="width: 150px; text-align:center;height:30px;padding-top:2px">
+                        price : {{this.package_id.price}}</p>
+                    <p class="bg-danger text-white rounded"
+                        style="width: 150px; text-align:center;height:30px;padding-top:2px">number : {{this.number}}</p>
+                </div>
+            </div>
+        </div>
+
+        {{/each}}
+    </div>
+</div>

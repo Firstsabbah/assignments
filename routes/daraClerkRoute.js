@@ -6,8 +6,7 @@ const {
   getEditPackage,
   deletePackage,
   upload,
-  veiwPackage,
-} = require("../controllers/packageController");
+} = require("../controllers/dataClerkController");
 const express = require("express");
 const route = express.Router();
 
@@ -17,5 +16,5 @@ route.post("/all-packages", upload, createPackage);
 route.get("/edit-package/:id", getEditPackage);
 route.post("/edit-package/:id", upload, editPackage);
 route.get("/delete-package/:id", deletePackage);
-route.get("/meal-packages/:id", veiwPackage);
+
 module.exports = route;

@@ -143,6 +143,11 @@
   font-weight: bold;
 }
 
+.packages-btn a,
+.packages-btn a:hover {
+  color: white;
+  text-decoration: none;
+}
 .packages-price {
   font-size: 17px;
   margin: 20px 0 60px 0;
@@ -178,7 +183,7 @@
   margin-top: 0px;
   margin-bottom: 50px;
 }
-@media only screen and (max-width: 800px){
+@media only screen and (max-width: 800px) {
   .package-hero {
     height: 198px;
   }
@@ -187,7 +192,7 @@
     position: absolute;
     top: 70px;
   }
-  .box{
+  .box {
     display: none;
   }
   .packages-container {

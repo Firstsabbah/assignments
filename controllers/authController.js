@@ -16,7 +16,7 @@ async function signUp(req, res, next) {
 }
 
 async function login(req, res, next) {
-  console.log(req.body);
+  // console.log(req.body);
   let messages = [];
   if (!req.body.email || !req.body.password) {
     messages.push("Please fill out the form");

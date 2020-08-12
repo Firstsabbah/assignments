@@ -1,91 +1,85 @@
-const multer = require("multer");
-const Package = require("../models/mealPackageModel");
-const fs = require("fs");
-const multipleMongooseToObj = (arrayOfMongooseDocuments) => {
-  const tempArray = [];
-  if (arrayOfMongooseDocuments.length !== 0) {
-    arrayOfMongooseDocuments.forEach((doc) => tempArray.push(doc.toObject()));
-  }
-  return tempArray;
-};
-
-let storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/images/");
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split("/")[1];
-    cb(null, `package-${Date.now()}.${ext}`);
-  },
-  fileFilter: (req, file, cb) => {
-    checkFileType(file, cb);
-  },
-});
-
-function checkFileType(file, cb) {
-  const fileTypes = /jpeg|jpg|png/;
-  const extname = fileType.test(path.extname(file.orginalname).toLowerCase());
-  const mimetype = fileTypes.test(file.mimetype);
-  if (extname && mimetype) return cb(null, true);
-  else cb("Error: you can only upload images");
-}
-
-let upload = multer({ storage }).single("package-img");
-
-async function createPackage(req, res) {
-  if (req.file) {
-    req.body.imgSrc = req.file.filename;
-  }
-  const package = await Package.create(req.body);
-  res.redirect("/admin/all-packages");
-}
-
-async function getEditPackage(req, res) {
-  const package = await Package.findById(req.params.id);
-  if (package) {
-    res.render("edite-package", package);
-  } else {
-    res.send("<h1>Not Found</h1>");
-  }
-}
-
-async function editPackage(req, res) {
-  if (req.file) {
-    req.body.imgSrc = req.file.filename;
-  }
-  const package = await Package.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  res.redirect("/admin/all-packages");
-}
-
-async function deletePackage(req, res) {
-  const package = await Package.findByIdAndDelete(req.params.id);
-  fs.unlinkSync(`public/images/${package.imgSrc}`);
-  res.redirect("/admin/all-packages");
+const Package = require("./../models/mealPackageModel");
+const { multipleMongooseToObj } = require("./../util/toObject");
+const Booking = require("../models/bookingModel");
+const { mapReduce } = require("../models/bookingModel");
+async function mealPackages(req, res) {
+  const packages = multipleMongooseToObj(await Package.find({}));
+  res.render("packages", { packages });
 }
 
 async function veiwPackage(req, res) {
-  const package = await Package.findById(req.body.id);
+  const package = await Package.findById(req.params.id);
+  //   console.log(package);
   res.render("package-describtion", package);
 }
-function dataClerk(req, res) {
-  res.render("dataClerk");
+
+async function addToOrder(req, res) {
+  const cart = await Booking.findOne({
+    user: req.session.user.id,
+    active: true,
+  });
+  if (cart) {
+    console.log(cart);
+    let packageIndex = cart.packages.findIndex(
+      (p) => p.package_id == req.params.id
+    );
+    console.log(packageIndex);
+    if (packageIndex != -1) {
+      let package = cart.packages[packageIndex];
+      package.number = req.body.number;
+      cart.packages[packageIndex] = package;
+    } else {
+      cart.packages.push({
+        package_id: req.params.id,
+        number: req.body.number,
+      });
+    }
+
+    cart.totalPrice = cart.totalPrice + req.params.price * req.body.number;
+    await cart.save();
+    res.redirect("/dashboard");
+  } else {
+    const newCart = await Booking.create({
+      packages: [{ package_id: req.params.id, number: req.body.number }],
+      user: req.session.user.id,
+      totalPrice: req.params.price * req.body.number,
+    });
+    res.redirect("/dashboard");
+  }
+  res.redirect("/dashboard");
 }
 
-async function getAllPackages(req, res) {
-  const packages = multipleMongooseToObj(await Package.find({}));
+async function placeOrder(req, res) {
+  const cart = await Booking.findOneAndUpdate(
+    { user: req.session.user.id, active: true },
+    { active: false },
+    { new: true }
+  );
+  let email = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.AUTH_USER,
+      pass: process.env.AUTH_PASS,
+    },
+  });
+  const mailOption = {
+    from: " assignment.hesam@gmail.com",
+    to: req.session.user.email,
+    subject: "welcome message",
+    text: `hello ${req.session.user.firstname} welcome to our website`,
+  };
 
-  res.render("allPackages", { packages });
+  try {
+    await email.sendMail(mailOption);
+    next();
+  } catch (err) {
+    console.log("email not sent", err);
+  }
+  res.redirect("/dashboard");
 }
-
 module.exports = {
-  createPackage,
-  dataClerk,
-  getAllPackages,
-  editPackage,
-  getEditPackage,
-  deletePackage,
-  upload,
+  mealPackages,
   veiwPackage,
+  addToOrder,
+  placeOrder,
 };
