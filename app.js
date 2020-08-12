@@ -4,6 +4,7 @@ const handlebars = require("express-handlebars");
 const mongoose = require("mongoose");
 const clientSessions = require("client-sessions");
 const userRoutes = require("./routes/authRoute");
+const dataClerkRoutes = require("./routes/packageRout");
 require("dotenv").config({ path: "./config.env" });
 const app = express();
 
@@ -28,14 +29,16 @@ app.use(
 
 app.engine("handlebars", handlebars({ defaultLayout: "template" }));
 app.set("view engine", "handlebars");
-// app.get("/", (req, res) => {
-//   res.render("home");
-// });
-// app.get("/meal-packages", (req, res) => {
-//   res.render("packages");
-// });
+app.get("/", (req, res) => {
+  res.render("home");
+});
+app.get("/meal-packages", (req, res) => {
+  res.render("packages");
+});
 
 app.use("/", userRoutes);
+app.use("/admin", dataClerkRoutes);
+
 app.listen(process.env.PORT || 8000, () => {
   console.log("server started...");
 });

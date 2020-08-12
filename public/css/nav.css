@@ -1,4 +1,4 @@
-nav {
+.app-navbar {
   width: 100%;
   height: 60px;
   display: flex;
@@ -94,7 +94,7 @@ nav {
 }
 
 @media only screen and (max-width: 800px) {
-  nav {
+  .app-navbar {
     width: 100%;
     height: 100%;
     display: none;
