@@ -66,7 +66,7 @@ async function placeOrder(req, res) {
     from: " assignment.hesam@gmail.com",
     to: req.session.user.email,
     subject: "welcome message",
-    text: `hello ${req.session.user.firstname} welcome to our website`,
+    text: `hello ${req.session.user.firstname} Your cart is empty `,
   };
 
   try {
