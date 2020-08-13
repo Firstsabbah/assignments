@@ -7,9 +7,13 @@ const {
   deletePackage,
   upload,
 } = require("../controllers/dataClerkController");
+const {
+  isAuthenticated,
+  protectDataClerk,
+} = require("./../controllers/middlewars");
 const express = require("express");
 const route = express.Router();
-
+route.use(isAuthenticated, protectDataClerk);
 route.get("/data-clerk", dataClerk);
 route.get("/all-packages", getAllPackages);
 route.post("/all-packages", upload, createPackage);

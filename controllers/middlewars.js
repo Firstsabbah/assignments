@@ -1,3 +1,5 @@
+const User = require("../models/userModel");
+
 function isAuthenticated(req, res, next) {
   if (!req.session.user) {
     res.redirect("/login");
@@ -6,4 +8,16 @@ function isAuthenticated(req, res, next) {
   }
 }
 
-module.exports = { isAuthenticated };
+async function protectDataClerk(req, res, next) {
+  const dataClerk = await User.findOne({
+    _id: req.session.user.id,
+    role: "dataclerk",
+  });
+  if (dataClerk) {
+    next();
+  } else {
+    res.redirect("/dashboard");
+  }
+}
+
+module.exports = { isAuthenticated, protectDataClerk };
