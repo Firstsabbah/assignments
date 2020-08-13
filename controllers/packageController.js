@@ -71,10 +71,10 @@ async function placeOrder(req, res) {
 
   try {
     await email.sendMail(mailOption);
-    next();
   } catch (err) {
     console.log("email not sent", err);
   }
+  next();
   res.redirect("/dashboard");
 }
 module.exports = {

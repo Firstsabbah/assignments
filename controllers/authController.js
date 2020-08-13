@@ -87,10 +87,10 @@ async function validateAndSendEmail(req, res, next) {
 
     try {
       await email.sendMail(mailOption);
-      next();
     } catch (err) {
       console.log("email not sent", err);
     }
+    next();
   }
 }
 
