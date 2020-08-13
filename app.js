@@ -8,9 +8,15 @@ const dataClerkRoutes = require("./routes/daraClerkRoute");
 const packageRoutes = require("./routes/packageRoute");
 require("dotenv").config({ path: "./config.env" });
 const app = express();
-
+let dbLink;
+if (process.env.NODE_ENV === "production") {
+  dbLink = process.env.DB_LINK_PRODUCTION;
+} else {
+  dbLink = process.env.DB_LINK;
+}
+// console.log(process.env.NODE_ENV);
 mongoose
-  .connect(process.env.DB_LINK, {
+  .connect(dbLink, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
@@ -39,6 +45,7 @@ app.use((req, res, next) => {
   if (req.session.user) {
     res.locals.isAuth = true;
   }
+
   next();
 });
 app.get("/", (req, res) => {
