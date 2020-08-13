@@ -12,6 +12,10 @@ const userSchema = mongoose.Schema({
     minLength: 6,
     maxLength: 12,
   },
+  role: {
+    type: String,
+    default: "user",
+  },
 });
 
 userSchema.pre("save", async function (next) {

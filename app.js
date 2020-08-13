@@ -44,12 +44,14 @@ app.set("view engine", "handlebars");
 app.use((req, res, next) => {
   if (req.session.user) {
     res.locals.isAuth = true;
+    // console.log(req.session.role);
     if (req.session.user.role === "dataclerk") {
       res.locals.dataclerk = true;
     }
   }
   next();
 });
+
 app.get("/", (req, res) => {
   res.render("home");
 });

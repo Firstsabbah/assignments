@@ -23,21 +23,25 @@ async function login(req, res, next) {
     res.render("login", { messages });
   } else {
     const user = await User.findOne({ email: req.body.email });
+    // console.log(user);
     if (!user) {
       res.render("login", { messages: ["user not found"] });
-    }
-    if (await user.comparePassword(req.body.password)) {
-      req.session.user = {
-        id: user.id,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        email: user.email,
-      };
-      res.redirect("/dashboard");
     } else {
-      res.render("login", {
-        messages: ["the entered password is not correct"],
-      });
+      if (await user.comparePassword(req.body.password)) {
+        req.session.user = {
+          id: user.id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email: user.email,
+          role: user.role,
+        };
+
+        res.redirect("/dashboard");
+      } else {
+        res.render("login", {
+          messages: ["the entered password is not correct"],
+        });
+      }
     }
   }
 }
