@@ -37,7 +37,7 @@ app.engine(
 app.set("view engine", "handlebars");
 
 app.use((req, res, next) => {
-  if (req.session.user.id) {
+  if (req.session.user.id != undefined) {
     res.locals.isAuth = true;
   }
   next();
