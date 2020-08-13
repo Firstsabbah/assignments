@@ -1,7 +1,12 @@
-<div class="info">
-    <p class="welcome">welcome<b> {{firstname}} {{lastname}}</b></p>
-    <p class="email-client">your registered email is <b>{{email}}</b></p>
-    <a href="/logout" class="btn btn-primary" role="button">logout</a>
+<div class="info ">
+    <div class="row">
+        <p class="welcome col-md-12 col-sm-12 col-md-10 mt-5">welcome<b> {{firstname}} {{lastname}}</b></p>
+    </div>
+    <div class="row">
+        <p class="email-client text-center col-sm-8 col-md-10 mx-auto">your registered email is <b>{{email}}</b>
+        </p>
+    </div>
+    <div class="row"><a href="/logout" class="btn btn-primary text-white" role="button">logout</a></div>
 </div>
 
 {{#if totalPrice}}
@@ -20,9 +25,9 @@
 <div class="container mb-5 mt-5">
     <div class="row">
         {{#each packages}}
-        <div class="col-md-3 ">
+        <div class="col-md-6 col-sm-5 col-lg-4 mx-auto">
 
-            <div class="card" style="width: 17rem;">
+            <div class="card mt-3 mx-auto" style="width: 17rem;">
                 <img class="card-img-top" src="/images/{{this.package_id.imgSrc}}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{this.package_id.name}}</h5>

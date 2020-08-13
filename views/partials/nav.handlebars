@@ -26,8 +26,13 @@
             <a href="#" class="fake-links">About Us</a>
         </div>
         <div class="nav-auth">
+            {{#if isAuth}}
+            <a href="/dashboard" class="auth">dashboard</a>
+            {{else}}
             <a href="/register" class="auth">Register</a>
             <a href="/login" class="auth">Login</a>
+            {{/if}}
+
         </div>
     </div>
 </nav>

@@ -28,8 +28,20 @@ app.use(
   })
 );
 
-app.engine("handlebars", handlebars({ defaultLayout: "template" }));
+app.engine(
+  "handlebars",
+  handlebars({
+    defaultLayout: "template",
+  })
+);
 app.set("view engine", "handlebars");
+
+app.use((req, res, next) => {
+  if (req.session.user.id) {
+    res.locals.isAuth = true;
+  }
+  next();
+});
 app.get("/", (req, res) => {
   res.render("home");
 });
