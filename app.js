@@ -35,7 +35,12 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
-
+app.use((req, res, next) => {
+  if (req.session.user) {
+    res.locals.isAuth = true;
+  }
+  next();
+});
 app.get("/", (req, res) => {
   res.render("home");
 });
@@ -43,12 +48,7 @@ app.get("/", (req, res) => {
 app.use("/", userRoutes);
 app.use("/admin", dataClerkRoutes);
 app.use("/meal-packages", packageRoutes);
-app.use((req, res, next) => {
-  if (req.session.user.id != undefined) {
-    res.locals.isAuth = true;
-  }
-  next();
-});
+
 app.listen(process.env.PORT || 8000, () => {
   console.log("server started...");
 });
