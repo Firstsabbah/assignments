@@ -26,8 +26,12 @@
             <a href="#" class="fake-links">About Us</a>
         </div>
         <div class="nav-auth">
+            {{#if dataclerk}}
+            <a href="/admin/data-clerk" class="btn btn-success mr-2" role="button">Data Clerk</a>
+            {{/if}}
             {{#if isAuth}}
-            <a href="/dashboard" class="auth">Dashboard</a>
+            <a href="/dashboard" class="btn btn-primary" role="button">Dashboard</a>
+
             {{else}}
             <a href="/register" class="auth">Register</a>
             <a href="/login" class="auth">Login</a>

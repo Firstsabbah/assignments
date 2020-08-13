@@ -14,6 +14,7 @@ async function protectDataClerk(req, res, next) {
     role: "dataclerk",
   });
   if (dataClerk) {
+    req.session.user.role = "dataclerk";
     next();
   } else {
     res.redirect("/dashboard");
