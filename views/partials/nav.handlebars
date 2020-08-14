@@ -27,10 +27,11 @@
         </div>
         <div class="nav-auth">
             {{#if dataclerk}}
-            <a href="/admin/data-clerk" class="btn btn-success mr-2" role="button">Data Clerk</a>
+            <a href="/admin/data-clerk" class="btn btn-success mr-2 text-white" role="button">Data Clerk</a>
             {{/if}}
+            <br />
             {{#if isAuth}}
-            <a href="/dashboard" class="btn btn-primary" role="button">Dashboard</a>
+            <a href="/dashboard" class="btn btn-primary text-white " role="button">Dashboard</a>
             {{else}}
             <a href="/register" class="auth">Register</a>
             <a href="/login" class="auth">Login</a>

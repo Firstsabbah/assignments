@@ -1,7 +1,7 @@
 const Package = require("./../models/mealPackageModel");
 const { multipleMongooseToObj } = require("./../util/toObject");
 const Booking = require("../models/bookingModel");
-const { mapReduce } = require("../models/bookingModel");
+const nodemailer = require("nodemailer");
 async function mealPackages(req, res) {
   const packages = multipleMongooseToObj(await Package.find({}));
   res.render("packages", { packages });
@@ -65,8 +65,8 @@ async function placeOrder(req, res) {
   const mailOption = {
     from: " assignment.hesam@gmail.com",
     to: req.session.user.email,
-    subject: "welcome message",
-    text: `hello ${req.session.user.firstname} Your cart is empty `,
+    subject: "shopping cart",
+    text: `hello ${req.session.user.firstname}, Your cart is empty `,
   };
 
   try {
@@ -74,7 +74,7 @@ async function placeOrder(req, res) {
   } catch (err) {
     console.log("email not sent", err);
   }
-  next();
+
   res.redirect("/dashboard");
 }
 module.exports = {
