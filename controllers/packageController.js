@@ -2,6 +2,7 @@ const Package = require("./../models/mealPackageModel");
 const { multipleMongooseToObj } = require("./../util/toObject");
 const Booking = require("../models/bookingModel");
 const nodemailer = require("nodemailer");
+
 async function mealPackages(req, res) {
   const packages = multipleMongooseToObj(await Package.find({}));
   res.render("packages", { packages });

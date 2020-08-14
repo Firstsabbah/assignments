@@ -7,6 +7,12 @@
         </p>
     </div>
     <div class="row"><a href="/logout" class="btn btn-primary text-white" role="button">logout</a></div>
+
+    {{#if dataclerk}}
+    <div class="row"><a href="/admin/all-packages" class="btn btn-primary text-white mt-2" role="button">All
+            Packages</a>
+    </div>
+    {{/if}}
 </div>
 
 {{#if totalPrice}}
